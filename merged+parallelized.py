@@ -68,6 +68,9 @@ def main(file_path, to_read):
 
 if __name__ == "__main__":
     columns_to_read = ['text', 'generated']
-    main("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
-    columns_to_read = ['text', 'source']
-    main("/home/cristian/Downloads/2/data.csv", columns_to_read)
+    #main("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
+    main("D:/Nicro/Downloads/AI_Human.csv", columns_to_read)
+
+    #columns_to_read = ['text', 'source']
+    #main("D:/Nicro/Downloads/archive/data.csv", columns_to_read)
+    #main("/home/cristian/Downloads/2/data.csv", columns_to_read)
