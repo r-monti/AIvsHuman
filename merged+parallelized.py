@@ -55,7 +55,7 @@ def main(file_path, to_read):
         reports.append(report)
 
         del result
-        gc.collect() /test
+        gc.collect() #test
 
     model_names = ["Multinomial Naive Bayes", "Complement Naive Bayes", "Decision Tree Classifier"]
     for i in range(len(model_names)):
