@@ -2,8 +2,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
-def countSamples(file):
+'''
+def countSamples(file, column):
     plt.figure(figsize=(10, 6))
     class_names = file['generated_cor'].unique()
     color_mapping = {'Human': '#00c851', 'AI': '#ffbb33'}
@@ -17,9 +17,55 @@ def countSamples(file):
     plt.xticks(range(len(class_names)), class_names)
 
     plt.show()
+'''
+def countSamples(file, column="generated_cor"):
+    plt.figure(figsize=(10, 6))
 
+    # Get unique class names and colors
+    class_names = file[column].unique()
+    color_mapping = {'Human': '#00c851'}
 
-def wordLengs(file):
+    # Assign #ffbb33 color to non-'Human' values
+    for value in file[column].unique():
+        if value != 'Human':
+            color_mapping[value] = '#ffbb33'
+
+    # Create list of colors based on 'generated_cor' values
+    colors = [color_mapping[value] for value in file[column].unique()]
+
+    sns.countplot(x=column, data=file, palette=colors, hue=column, legend=False)
+
+    plt.title('Quantity of samples by Author', fontsize=24)
+    plt.ylabel("Number of samples")
+    plt.xlabel('Author')
+    plt.xticks(range(len(class_names)), class_names)
+
+    plt.show()
+
+def countSamples2(file):
+    plt.figure(figsize=(10, 6))
+
+    # Get unique class names and colors
+    class_names = file['source'].unique()
+    color_mapping = {'Human': '#00c851'}
+
+    # Assign #ffbb33 color to non-'Human' values
+    for value in file['source'].unique():
+        if value != 'Human':
+            color_mapping[value] = '#ffbb33'
+
+    # Create list of colors based on 'generated_cor' values
+    colors = [color_mapping[value] for value in file['source'].unique()]
+
+    sns.countplot(x='source', data=file, palette=colors, hue='source', legend=False)
+
+    plt.title('Quantity of samples by Author', fontsize=24)
+    plt.ylabel("Number of samples")
+    plt.xlabel('Author')
+    plt.xticks(range(len(class_names)), class_names)
+
+    plt.show()
+def wordLength(file):
     file['text_length'] = file['text'].apply(len)
 
     file['text_word_count'] = file['text'].apply(lambda x: len(str(x).split()))
@@ -71,7 +117,7 @@ def main(file_path, to_read):
 
     print(file['generated_cor'].value_counts())
     # countSamples(file.copy())
-    wordLengs(file.copy())
+    wordLength(file.copy())
 
 
 if __name__ == "__main__":
