@@ -18,53 +18,79 @@ def countSamples(file, column):
 
     plt.show()
 '''
-def countSamples(file, column="generated_cor"):
+
+
+def countSamplesGroup(file, column="group"):
+    # Set plot size
     plt.figure(figsize=(10, 6))
 
     # Get unique class names and colors
-    class_names = file[column].unique()
-    color_mapping = {'Human': '#00c851'}
+    classNames = file[column].unique()
+    colorMapping = dict()
 
     # Assign #ffbb33 color to non-'Human' values
-    for value in file[column].unique():
-        if value != 'Human':
-            color_mapping[value] = '#ffbb33'
+    for label in classNames:
+        if label != 'Human':
+            colorMapping[label] = '#ffbb33'
+        else:
+            colorMapping[label] = '#00c851'
 
     # Create list of colors based on 'generated_cor' values
-    colors = [color_mapping[value] for value in file[column].unique()]
+    colors = [colorMapping[value] for value in classNames]
 
     sns.countplot(x=column, data=file, palette=colors, hue=column, legend=False)
 
     plt.title('Quantity of samples by Author', fontsize=24)
     plt.ylabel("Number of samples")
     plt.xlabel('Author')
-    plt.xticks(range(len(class_names)), class_names)
+    plt.xticks(range(len(classNames)), classNames)
 
     plt.show()
 
-def countSamples2(file):
+
+def countAllSamples(file, column="source"):
+    # Set plot size
     plt.figure(figsize=(10, 6))
 
     # Get unique class names and colors
-    class_names = file['source'].unique()
-    color_mapping = {'Human': '#00c851'}
+    classNames = file[column].unique()
+    colorMapping = dict()
 
     # Assign #ffbb33 color to non-'Human' values
-    for value in file['source'].unique():
-        if value != 'Human':
-            color_mapping[value] = '#ffbb33'
+    for label in classNames:
+        if label != 'Human':
+            colorMapping[label] = '#ffbb33'
+        else:
+            colorMapping[label] = '#00c851'
 
-    # Create list of colors based on 'generated_cor' values
-    colors = [color_mapping[value] for value in file['source'].unique()]
+    # Create list of colors based on classNames values
+    colors = [colorMapping[value] for value in classNames]
 
-    sns.countplot(x='source', data=file, palette=colors, hue='source', legend=False)
+    sns.countplot(x=column, data=file, palette=colors, hue=column, legend=False)
 
+    # Add title and lables
     plt.title('Quantity of samples by Author', fontsize=24)
     plt.ylabel("Number of samples")
     plt.xlabel('Author')
-    plt.xticks(range(len(class_names)), class_names)
+    plt.xticks(range(len(classNames)), classNames)
 
+    # Rotate labels on the x axys
+    plt.xticks(rotation=90)
+
+    # Add margin to the bottom
+    plt.subplots_adjust(bottom=0.4)
+
+    # Make "Human" lable red
+    ax = plt.gca()
+    labels = ax.get_xticklabels()
+    for i, label in enumerate(labels):
+        if label.get_text() == 'Human':
+            labels[i].set_color('red')
+
+    # Show the plot
     plt.show()
+
+
 def wordLength(file):
     file['text_length'] = file['text'].apply(len)
 
@@ -104,27 +130,37 @@ def wordLength(file):
     # Show the plot
     plt.show()
 
-def main(file_path, to_read):
-    file = pd.read_csv(file_path, usecols=to_read)
-    if 'generated' in to_read:
-        file['generated_cor'] = file['generated'].replace({
+
+def prepareFile(filePath, toRead):
+    file = pd.read_csv(filePath, usecols=toRead)
+
+    if 'generated' in toRead:
+        file['group'] = file['generated'].replace({
             0: 'Human',
             1: 'AI'
         })
     else:
-        file['generated_cor'] = file['source']
-        file.loc[file['generated_cor'] != 'Human', 'generated_cor'] = 'AI'
+        file['group'] = file['source']
+        file.loc[file['group'] != 'Human', 'group'] = 'AI'
 
-    print(file['generated_cor'].value_counts())
-    # countSamples(file.copy())
-    wordLength(file.copy())
+    return file
+
+
+def startML(filePath, toRead):
+    file = prepareFile(filePath, toRead)
+
+    print(file['group'].value_counts())
+    countSamplesGroup(file.copy())
+    countAllSamples(file.copy())
+    # wordLength(file.copy())
 
 
 if __name__ == "__main__":
-    columns_to_read = ['text', 'generated']
-    # main("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
-    main("D:/Nicro/Downloads/AI_Human.csv", columns_to_read)
-
+    # columns_to_read = ['text', 'generated']
     columns_to_read2 = ['text', 'source']
-    main("D:/Nicro/Downloads/archive/data.csv", columns_to_read2)
-    # main("/home/cristian/Downloads/2/data.csv", columns_to_read)
+
+    # startML("C:/AI_Human.csv", columns_to_read)
+    # startML("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
+
+    startML("C:/data.csv", columns_to_read2)
+    # startML("/home/cristian/Downloads/2/data.csv", columns_to_read)
