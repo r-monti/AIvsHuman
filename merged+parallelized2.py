@@ -9,6 +9,7 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from joblib import Parallel, delayed
 
+
 def timer(func):
     def wrapper(*args, **kwargs):
         start_time = time.perf_counter()
@@ -17,7 +18,9 @@ def timer(func):
         elapsed_time = end_time - start_time
         print(f"Function '{func.__name__}' executed in {elapsed_time:.6f} seconds")
         return result
+
     return wrapper
+
 
 @timer
 def run_pipeline(model, x_train, y_train, x_test):
@@ -71,12 +74,12 @@ def main(file_path, to_read):
         reports.append(report)
 
         del result
-        gc.collect() #test
+        gc.collect()  # test
 
     model_names = ["Multinomial Naive Bayes", "Complement Naive Bayes", "Decision Tree Classifier"]
-    #for i in range(len(model_names)):
+    # for i in range(len(model_names)):
     for i in range(len(accuracies)):
-        #print(f"{model_names[i]}:")
+        # print(f"{model_names[i]}:")
         print(f"{model_names[2]} with max_depth X")
         print(f"Accuracy: {accuracies[i] * 100:.2f}%")
         print("Classification Report:")
@@ -87,8 +90,8 @@ def main(file_path, to_read):
 if __name__ == "__main__":
     columns_to_read = ['text', 'generated']
     main("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
-    #main("D:/Nicro/Downloads/AI_Human.csv", columns_to_read)
+    # main("D:/Nicro/Downloads/AI_Human.csv", columns_to_read)
 
-    #columns_to_read = ['text', 'source']
-    #main("D:/Nicro/Downloads/archive/data.csv", columns_to_read)
-    #main("/home/cristian/Downloads/2/data.csv", columns_to_read)
+    # columns_to_read = ['text', 'source']
+    # main("D:/Nicro/Downloads/archive/data.csv", columns_to_read)
+    # main("/home/cristian/Downloads/2/data.csv", columns_to_read)
