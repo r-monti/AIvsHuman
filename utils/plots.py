@@ -1,11 +1,28 @@
-import nltk
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from collections import Counter
-
+from sklearn.metrics import roc_curve, auc
 from nltk import word_tokenize
 from nltk.corpus import stopwords
+
+
+def rocCurve(yTrue, yScore):
+    # Calcola la curva ROC e l'area sotto la curva (AUC)
+    fpr, tpr, _ = roc_curve(yTrue, yScore)
+    rocAuc = auc(fpr, tpr)
+
+    # Plot della curva ROC
+    plt.figure()
+    plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % rocAuc)
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend(loc="lower right")
+    plt.show()
 
 
 def countSamplesGroup(file, column="group"):
@@ -35,6 +52,7 @@ def countSamplesGroup(file, column="group"):
     plt.xticks(range(len(classNames)), classNames)
 
     plt.show()
+    del file
 
 
 def countAllSamples(file, column="source"):
@@ -82,6 +100,7 @@ def countAllSamples(file, column="source"):
 
     # Show the plot
     plt.show()
+    del file
 
 
 def textLength(file):
@@ -108,11 +127,13 @@ def textLength(file):
 
     plt.xticks(rotation=45)
     plt.show()
+    del file
 
 
-def countWords(file):
+def count100Words(file, num):
+    randomSample = file.sample(n=num, replace=False)
     # Concatena tutte le frasi in un'unica stringa
-    all_text = ' '.join(file['text'][:10000])
+    all_text = ' '.join(randomSample['text'])
 
     # Tokenizzazione delle parole
     tokens = word_tokenize(all_text)
@@ -140,14 +161,19 @@ def countWords(file):
     # Crea il grafico
     plt.figure(figsize=(15, 8))
     plt.bar(words, frequencies)
-    plt.xlabel('Parole')
-    plt.ylabel('Numero di occorrenze')
-    plt.title('Top 100 Parole più Usate')
+    plt.xlabel('Words')
+    plt.ylabel('Frequency')
+    plt.yscale('log')
+    plt.title('Top 100 most common words [Dataset]')
     plt.xticks(rotation=90)  # Ruota le etichette sull'asse x per una migliore leggibilità
     plt.show()
-    """
+    del file
+
+
+def count100WordsAI(file, n):
+    AITexts = file.loc[file['group'] == 'AI']
     # Concatena tutte le frasi in un'unica stringa
-    all_text = ' '.join(file['text'][:100000])
+    all_text = ' '.join(AITexts['text'][:n])
 
     # Tokenizzazione delle parole
     tokens = word_tokenize(all_text)
@@ -159,44 +185,69 @@ def countWords(file):
     # Calcola le frequenze delle parole
     word_freq = Counter(filtered_tokens)
 
+    # Estrai le parole e le relative frequenze
+    words = list(word_freq.keys())  # Estrai le parole
+    frequencies = list(word_freq.values())  # Estrai le frequenze
+
+    # Ordina le parole in base alle frequenze
+    words, frequencies = zip(*sorted(zip(words, frequencies), key=lambda x: x[1], reverse=True))
+
     # Seleziona le 100 parole più comuni
-    top_words = word_freq.most_common(100)
+    top_words = list(zip(words[:100], frequencies[:100]))
 
     # Estrai le parole e le relative frequenze
     words, frequencies = zip(*top_words)
 
     # Crea il grafico
     plt.figure(figsize=(15, 8))
-    plt.bar(words, frequencies)
-    plt.xlabel('Parole')
-    plt.ylabel('Frequenza')
-    plt.title('Top 100 Parole più Usate')
-    plt.xticks(rotation=90)  # Ruota le etichette sull'asse x per una migliore leggibilità
-    plt.show()
-    """
-    """
-    # Combine all text data into a single string
-    allText = ' '.join(file['text'][:100000])
-
-    # Tokenization
-    tokens = wordTokenize(allText)
-
-    # Count word frequencies
-    wordFreq = Counter(tokens)
-
-    # Plotting the most frequent words
-    mcWords = wordFreq.most_common(100)
-
-    words, frequencies = zip(*mcWords)
-
-    plt.figure(figsize=(10, 6))
-    plt.bar(words, frequencies)
-    plt.title('Top 100 Most Frequent Words')
+    plt.bar(words, frequencies, color='#ffbb33')
     plt.xlabel('Words')
     plt.ylabel('Frequency')
-    plt.xticks(rotation=90)
+    plt.yscale('log')
+    plt.title('Top 100 most common words [AI]')
+    plt.xticks(rotation=90)  # Ruota le etichette sull'asse x per una migliore leggibilità
     plt.show()
-    """
+    del file
+
+
+def count100WordsHuman(file, n):
+    humanTexts = file.loc[file['group'] == 'Human']
+    # Concatena tutte le frasi in un'unica stringa
+    all_text = ' '.join(humanTexts['text'][:n])
+
+    # Tokenizzazione delle parole
+    tokens = word_tokenize(all_text)
+
+    # Rimozione delle stopwords
+    stop_words = set(stopwords.words('english'))
+    filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+
+    # Calcola le frequenze delle parole
+    word_freq = Counter(filtered_tokens)
+
+    # Estrai le parole e le relative frequenze
+    words = list(word_freq.keys())  # Estrai le parole
+    frequencies = list(word_freq.values())  # Estrai le frequenze
+
+    # Ordina le parole in base alle frequenze
+    words, frequencies = zip(*sorted(zip(words, frequencies), key=lambda x: x[1], reverse=True))
+
+    # Seleziona le 100 parole più comuni
+    top_words = list(zip(words[:100], frequencies[:100]))
+
+    # Estrai le parole e le relative frequenze
+    words, frequencies = zip(*top_words)
+
+    # Crea il grafico
+    plt.figure(figsize=(15, 8))
+    plt.bar(words, frequencies, color='#00c851')
+    plt.xlabel('Words')
+    plt.ylabel('Frequency')
+    plt.yscale('log')
+    plt.title('Top 100 most common words [Human]')
+    plt.xticks(rotation=90)  # Ruota le etichette sull'asse x per una migliore leggibilità
+    plt.show()
+    del file
 
 
 def prepareFile(filePath, toRead):
@@ -221,7 +272,9 @@ def startML(filePath, toRead):
     # countSamplesGroup(file.copy())
     # countAllSamples(file.copy())
     # textLength(file.copy())
-    countWords(file.copy())
+    count100Words(file.copy(), 10000)
+    count100WordsAI(file.copy(), 10000)
+    count100WordsHuman(file.copy(), 10000)
 
 
 if __name__ == "__main__":
