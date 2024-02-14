@@ -1,0 +1,89 @@
+Decision Tree Classifier depth=20:
+Accuracy: 94.58%
+Classification Report:
+              precision    recall  f1-score   support
+
+          AI       0.97      0.89      0.92     36275
+       Human       0.94      0.98      0.96     61172
+
+    accuracy                           0.95     97447
+   macro avg       0.95      0.93      0.94     97447
+weighted avg       0.95      0.95      0.95     97447
+
+
+----------------------------------
+
+Decision Tree Classifier depth=2:
+Accuracy: 75.49%
+Classification Report:
+              precision    recall  f1-score   support
+
+          AI       0.90      0.38      0.54     36275
+       Human       0.73      0.98      0.83     61172
+
+    accuracy                           0.75     97447
+   macro avg       0.81      0.68      0.69     97447
+weighted avg       0.79      0.75      0.72     97447
+
+
+----------------------------------
+
+Decision Tree Classifier depth=3:
+Accuracy: 78.34%
+Classification Report:
+              precision    recall  f1-score   support
+
+          AI       0.87      0.49      0.63     36275
+       Human       0.76      0.96      0.85     61172
+
+    accuracy                           0.78     97447
+   macro avg       0.82      0.72      0.74     97447
+weighted avg       0.80      0.78      0.77     97447
+
+
+----------------------------------
+
+Decision Tree Classifier depth=4:
+Accuracy: 80.70%
+Classification Report:
+              precision    recall  f1-score   support
+
+          AI       0.86      0.58      0.69     36275
+       Human       0.79      0.94      0.86     61172
+
+    accuracy                           0.81     97447
+   macro avg       0.82      0.76      0.78     97447
+weighted avg       0.81      0.81      0.80     97447
+
+
+----------------------------------
+
+Decision Tree Classifier depth=6:
+Accuracy: 83.23%
+Classification Report:
+              precision    recall  f1-score   support
+
+          AI       0.82      0.71      0.76     36275
+       Human       0.84      0.91      0.87     61172
+
+    accuracy                           0.83     97447
+   macro avg       0.83      0.81      0.81     97447
+weighted avg       0.83      0.83      0.83     97447
+
+
+----------------------------------
+
+Decision Tree Classifier depth=7:
+Accuracy: 85.58%
+Classification Report:
+              precision    recall  f1-score   support
+
+          AI       0.86      0.73      0.79     36275
+       Human       0.85      0.93      0.89     61172
+
+    accuracy                           0.86     97447
+   macro avg       0.86      0.83      0.84     97447
+weighted avg       0.86      0.86      0.85     97447
+
+
+----------------------------------
