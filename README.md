@@ -1,9 +1,5 @@
 # AIvsHuman
 
-## Used Datasets
-1. [dataset from Shayan Gerami](https://www.kaggle.com/datasets/shanegerami/ai-vs-human-text) note:no license
-2. [dataset from Zachary Grinberg](https://www.kaggle.com/datasets/starblasters8/human-vs-llm-text-corpus/data?select=prompts.csv)
-
 **Authors:** Cristian Porzio and Raffaele Monti  
 *University of Salerno*
 
@@ -35,3 +31,7 @@ We discuss the characteristics and underlying assumptions of each model, setting
 In the final section, we summarize our findings and draw conclusions regarding the effectiveness of each machine learning model for the given classification task. We discuss potential areas for further research and improvements in model performance.
 
 This project provides valuable insights into the comparative analysis of machine learning models, aiding practitioners and researchers in selecting appropriate models for classification tasks.
+
+## Used Datasets
+1. [dataset from Shayan Gerami](https://www.kaggle.com/datasets/shanegerami/ai-vs-human-text) note:no license
+2. [dataset from Zachary Grinberg](https://www.kaggle.com/datasets/starblasters8/human-vs-llm-text-corpus/data?select=prompts.csv)
