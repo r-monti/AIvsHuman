@@ -8,7 +8,7 @@
 *University of Salerno*
 
 **1. Introduction**
-In this project, we explore and compare the performance of three different machine learning models for classification tasks. The models investigated are Multinomial Naive Bayes, Complement Naive Bayes, and Decision Tree Classifier. Our aim is to identify the strengths and weaknesses of each model and determine which one performs best on our dataset.
+In this project, we explore and compare the performance of three different machine learning models for classification tasks. The models investigated are Multinomial Naive Bayes, Complement Naive Bayes, and Decision Tree Classifier. Our aim is to identify the strengths and weaknesses of each model and determine which one performs best on our dataset. The full documentation is available in Italian [here](www.google.it). The resulting plots are available with Italian titles [here](https://github.com/r-monti/AIvsHuman/blob/main/plots/plots.md)
 
 **2. Data Collection**
 - **2.1. Understanding and Identifying Necessary Data:** We first identify the data required for our project, considering its relevance to our classification task.
