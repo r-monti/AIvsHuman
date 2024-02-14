@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 columns_to_read = ['text', 'generated']
 
-file = pd.read_csv("C:/AI_Human.csv", usecols=columns_to_read)
+file = pd.read_csv("/home/cristian/Downloads/archive/AI_Human.csv", usecols=columns_to_read)
 
 file['group'] = file['generated']
 file['group'] = file['generated'].replace({

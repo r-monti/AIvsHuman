@@ -39,9 +39,9 @@ def main(file_path, to_read):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     pipelines = [
-        Pipeline([('tfidf', TfidfVectorizer(stop_words='english')), ('clf', MultinomialNB())]),
-        Pipeline([('tfidf', TfidfVectorizer(stop_words='english')), ('clf', ComplementNB())]),
-        Pipeline([('tfidf', TfidfVectorizer(stop_words='english')), ('clf', DecisionTreeClassifier(max_depth=5))])
+        Pipeline([('tfidf', TfidfVectorizer(stop_words='english')), ('clf', MultinomialNB(fit_prior=True))]),
+        #Pipeline([('tfidf', TfidfVectorizer(stop_words='english')), ('clf', ComplementNB())]),
+        #Pipeline([('tfidf', TfidfVectorizer(stop_words='english')), ('clf', DecisionTreeClassifier(max_depth=5))])
     ]
 
     results = Parallel(n_jobs=-1)(delayed(run_pipeline)(pipe, X_train, y_train, X_test) for pipe in pipelines)
@@ -68,8 +68,8 @@ def main(file_path, to_read):
 
 if __name__ == "__main__":
     columns_to_read = ['text', 'generated']
-    #main("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
-    main("D:/Nicro/Downloads/AI_Human.csv", columns_to_read)
+    main("/home/cristian/Downloads/archive/AI_Human.csv", columns_to_read)
+    #main("D:/Nicro/Downloads/AI_Human.csv", columns_to_read)
 
     #columns_to_read = ['text', 'source']
     #main("D:/Nicro/Downloads/archive/data.csv", columns_to_read)
