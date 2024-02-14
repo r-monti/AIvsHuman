@@ -16,6 +16,7 @@ In this section, we introduce the three machine learning models under considerat
 - **3.1. Multinomial Naive Bayes**
 - **3.2. Complement Naive Bayes**
 - **3.3. Decision Tree Classifier**
+
 We discuss the characteristics and underlying assumptions of each model, setting the stage for our comparative analysis.
 
 **4. Data Manipulation and Execution**
